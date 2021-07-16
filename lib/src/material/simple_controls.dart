@@ -21,11 +21,7 @@ class _ControlsState extends State<Controls>
   late VideoPlayerValue _latestValue;
   Timer? _hideTimer;
   Timer? _initTimer;
-  late var _subtitlesPosition = const Duration();
-  bool _subtitleOn = false;
   Timer? _showAfterExpandCollapseTimer;
-  bool _dragging = false;
-  bool _displayTapped = false;
 
   final barHeight = 48.0 * 1.5;
   final marginSize = 5.0;
@@ -110,8 +106,6 @@ class _ControlsState extends State<Controls>
   AnimatedOpacity _buildBottomBar(
     BuildContext context,
   ) {
-    final iconColor = Theme.of(context).textTheme.button!.color;
-
     return AnimatedOpacity(
       opacity: notifier.hideStuff ? 0.0 : 1.0,
       duration: const Duration(milliseconds: 300),
@@ -209,12 +203,10 @@ class _ControlsState extends State<Controls>
 
     setState(() {
       notifier.hideStuff = false;
-      _displayTapped = true;
     });
   }
 
   Future<void> _initialize() async {
-    _subtitleOn = chewieController.subtitle?.isNotEmpty ?? false;
     controller.addListener(_updateState);
 
     _updateState();
@@ -246,31 +238,6 @@ class _ControlsState extends State<Controls>
     });
   }
 
-  void _playPause() {
-    final isFinished = _latestValue.position >= _latestValue.duration;
-
-    setState(() {
-      if (controller.value.isPlaying) {
-        notifier.hideStuff = false;
-        _hideTimer?.cancel();
-        controller.pause();
-      } else {
-        _cancelAndRestartTimer();
-
-        if (!controller.value.isInitialized) {
-          controller.initialize().then((_) {
-            controller.play();
-          });
-        } else {
-          if (isFinished) {
-            controller.seekTo(const Duration());
-          }
-          controller.play();
-        }
-      }
-    });
-  }
-
   void _startHideTimer() {
     _hideTimer = Timer(const Duration(seconds: 3), () {
       setState(() {
@@ -283,7 +250,6 @@ class _ControlsState extends State<Controls>
     if (!mounted) return;
     setState(() {
       _latestValue = controller.value;
-      _subtitlesPosition = controller.value.position;
     });
   }
 }
