@@ -120,10 +120,11 @@ class _ControlsState extends State<Controls>
           child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Flexible(
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
                     if (chewieController.allowFullScreen) _buildExpandButton(),
                   ],
