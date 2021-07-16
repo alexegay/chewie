@@ -203,7 +203,7 @@ class _ControlsState extends State<Controls>
     _startHideTimer();
 
     setState(() {
-      notifier.hideStuff = chewieController.isFullScreen;
+      notifier.hideStuff = !chewieController.isFullScreen;
     });
   }
 
@@ -219,7 +219,7 @@ class _ControlsState extends State<Controls>
     if (chewieController.showControlsOnInitialize) {
       _initTimer = Timer(const Duration(milliseconds: 200), () {
         setState(() {
-          notifier.hideStuff = chewieController.isFullScreen;
+          notifier.hideStuff = !chewieController.isFullScreen;
         });
       });
     }
@@ -227,7 +227,7 @@ class _ControlsState extends State<Controls>
 
   void _onExpandCollapse() {
     setState(() {
-      notifier.hideStuff = chewieController.isFullScreen;
+      notifier.hideStuff = !chewieController.isFullScreen;
 
       chewieController.toggleFullScreen();
       _showAfterExpandCollapseTimer =
@@ -242,7 +242,7 @@ class _ControlsState extends State<Controls>
   void _startHideTimer() {
     _hideTimer = Timer(const Duration(seconds: 3), () {
       setState(() {
-        notifier.hideStuff = chewieController.isFullScreen;
+        notifier.hideStuff = !chewieController.isFullScreen;
       });
     });
   }
