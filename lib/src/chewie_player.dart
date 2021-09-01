@@ -96,7 +96,7 @@ class ChewieState extends State<Chewie> {
       body: Container(
         alignment: Alignment.center,
         color: Colors.black,
-        child: controllerProvider,
+        child: InteractiveViewer(child: controllerProvider),
       ),
     );
   }
